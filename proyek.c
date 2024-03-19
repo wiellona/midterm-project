@@ -7,7 +7,6 @@
 
 int main()
 {
-	
 	FILE *data;
 	data = fopen("data proyek.txt", "w");
 	struct Event *event;
@@ -16,12 +15,13 @@ int main()
 	time_t t;
 	//dynamic memory allocation struct
 	event = (struct Event *) malloc (10 * sizeof(struct Event));
+
 	if (event == NULL) {
         printf("Alokasi memori gagal");
         exit(1);
     }
-	do
-	{
+
+	do {
 	t = time(NULL);
 	struct tm tm = *localtime(&t);
 	//menu awal
@@ -43,6 +43,7 @@ int main()
 	printf("| 3. Edit Event                   |\n");
 	printf("| 4. Keluar program               |\n");
 	printf("-----------------------------------\n");
+	printf("Masukkan angka 1-4\n");
 	printf("> ");
 
 	scanf("%d", &opsi);
@@ -53,8 +54,21 @@ int main()
 	    		buat_event(&event[jumlah_database], &jumlah_database);//function di proyek.h
 	    		break;
 	    	case 2:
+				// menu_searching();
 	    		clear();
 				searching_nama_event(&event[database], &jumlah_database, data);
+	    		for (database = 0; database < jumlah_database; database++)
+				{
+	    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
+	    		}
+				clear();
+				searching_tipe_event(&event[database], &jumlah_database, data);
+	    		for (database = 0; database < jumlah_database; database++)
+				{
+	    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
+	    		}
+				clear();
+				searching_waktu_event(&event[database], &jumlah_database, data);
 	    		for (database = 0; database < jumlah_database; database++)
 				{
 	    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
@@ -71,10 +85,10 @@ int main()
 	    		exit(0);
 	    		break;
 	    	default:
-	    		printf("INPUT SALAH\n");
+	    		printf("Input tidak valid. Silahkan masukkan angka 1-4.\n");
 	    		break;
 		}
     clear();
-	}while(opsi!=4);
+	} while(opsi!=4);
     exit(0);
 }
