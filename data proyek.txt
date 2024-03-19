@@ -1,0 +1,6 @@
+
+ama Event : UTS
+Tanggal : 23-22-2029
+deskripsi : Semangar
+tipe : Ujian
+urgensi : Penting

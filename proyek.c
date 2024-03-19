@@ -30,10 +30,21 @@ int main()
 	//function di AsciiArt.h
     printAsciiArt(tanggal);
     printAsciiArt(jam);
-    printAsciiArt("MENU");
-    
-    printf("|====|======================|\n| 1. |Buat Event            |\n| 2. |Lihat Event           |\n| 3. |Edit Event            |\n| 4. |Keluar                |\n|====|======================|\n(Pilih 1-4) : ");
-    
+	
+	// Main Menu
+	printf("\n\n-----------------------------------\n");
+	printf("|    Event Planner and Tracker    |\n");
+	printf("|         by Kelompok 23          |\n");
+	printf("-----------------------------------\n");
+	printf("|            Main Menu            |\n");
+	printf("|                                 |\n");
+	printf("| 1. Buat Event                   |\n");
+	printf("| 2. Lihat Event                  |\n");
+	printf("| 3. Edit Event                   |\n");
+	printf("| 4. Keluar program               |\n");
+	printf("-----------------------------------\n");
+	printf("> ");
+
 	scanf("%d", &opsi);
     switch(opsi)
 	    {
@@ -43,6 +54,7 @@ int main()
 	    		break;
 	    	case 2:
 	    		clear();
+				searching_nama_event(&event[database], &jumlah_database, data);
 	    		for (database = 0; database < jumlah_database; database++)
 				{
 	    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
