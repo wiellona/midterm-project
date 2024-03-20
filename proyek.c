@@ -52,6 +52,7 @@ int main()
 	    	case 1:
 	    		clear();
 	    		buat_event(&event[jumlah_database], &jumlah_database);//function di proyek.h
+				simpan_event(event, &jumlah_database, database, data);
 	    		break;
 	    	case 2:
 	    		do
@@ -69,7 +70,7 @@ int main()
 	    			if (opsi_detail!=0&&opsi_detail<=jumlah_database)
 	    			{
 	    				detail_event(&event[opsi_detail-1]);
-	    				printf("\n1. kembali\n2. Kembali ke menu\nmasukkan pilihan : ");
+	    				printf("\n1. Kembali\n2. Kembali ke menu\nMasukkan pilihan : ");
 						scanf("%d", &opsi_detail);
 						switch (opsi_detail)
 						{
@@ -89,7 +90,7 @@ int main()
 							searching_nama_event(&event[database], &jumlah_database, data);
 						}
 					}
-				}while(opsi_detail!=0 && kembali_ke_menu!=1);
+				} while(opsi_detail!=0 && kembali_ke_menu!=1);
 	    		break;
 	    	case 3:
 	    		
@@ -102,7 +103,7 @@ int main()
 	    		exit(0);
 	    		break;
 	    	default:
-	    		printf("INPUT SALAH\n");
+	    		printf("Input tidak valid. Silahkan masukkan angka 1-4.\n");
 	    		break;
 		}
     clear();

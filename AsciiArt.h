@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h> //untuk menggunakan tolower
 
 //function untuk print string dengan ascii art (Belom jadi)
 void printAsciiArt(const char *text) {

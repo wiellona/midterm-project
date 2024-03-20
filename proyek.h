@@ -13,11 +13,13 @@ void sorting_waktu(int jumlah_database, struct Event *event);
 void sorting_tipe(int jumlah_database, struct Event *event);
 void sorting_urgensi(int jumlah_database, struct Event *event);
 void swap(int urutan1, int urutan2, struct Event *event);
+int string_search(char* finder, char* target);
 //function prototype end
 
 //function untuk system ("pause") dan system("cls")
 void clear()
 {
+	printf("\n");
 	system ("pause");
 	system ("cls");
 }
@@ -27,17 +29,17 @@ void buat_event (struct Event *event, int *jumlah_database)
 {
 	printf("Nama Event : ");
 	scanf("%s", event->nama);
-	printf("Tanggal : ");
+	printf("Tanggal (1-31): ");
 	scanf("%d", &event->tanggal);
-	printf("Bulan : ");
+	printf("Bulan (1-12) : ");
 	scanf("%d", &event->bulan);
 	printf("Tahun : ");
 	scanf("%d", &event->tahun);
-	printf("deskripsi : ");
+	printf("Deskripsi : ");
 	scanf("%s", event->deskripsi);
-	printf("tipe : ");
+	printf("Tipe (Pribadi/Kelompok): ");
 	scanf("%s", event->tipe);
-	printf("urgensi : ");
+	printf("Urgensi (Mendesak/Tidak mendesak): ");
 	scanf("%s", event->urgensi);
 	(*jumlah_database)++;
 }
@@ -50,27 +52,27 @@ void lihat_event(struct Event *event, int *jumlah_database, int *database, FILE 
 
 void detail_event(struct Event *event)
 {
-	printf("nama Event : %s\n", event->nama);
+	printf("Nama Event : %s\n", event->nama);
 	printf("Tanggal : %2d-%2d-%4d\n", event->tanggal, event->bulan, event->tahun);
-	printf("deskripsi : %s\n", event->deskripsi);
-	printf("tipe : %s\n", event->tipe);
-	printf("urgensi : %s\n", event->urgensi);
+	printf("Deskripsi : %s\n", event->deskripsi);
+	printf("Tipe : %s\n", event->tipe);
+	printf("Urgensi : %s\n", event->urgensi);
 }
 
 //function untuk menyimpan event
 void simpan_event(struct Event *event, int *jumlah_database, int *database, FILE *data)
 {
-	fprintf(data, "nama Event : %s\n", event->nama);
+	fprintf(data, "\nNama Event : %s\n", event->nama);
 	fprintf(data, "Tanggal : %2d-%2d-%4d\n", event->tanggal, event->bulan, event->tahun);
-	fprintf(data, "deskripsi : %s\n", event->deskripsi);
-	fprintf(data, "tipe : %s\n", event->tipe);
-	fprintf(data,"urgensi : %s\n", event->urgensi);
+	fprintf(data, "Deskripsi : %s\n", event->deskripsi);
+	fprintf(data, "Tipe : %s\n", event->tipe);
+	fprintf(data,"Urgensi : %s\n", event->urgensi);
 }
 
 void menu_sorting(int jumlah_database, struct Event *event)
 {
 	int opsi_menu;
-	printf("1. Sorting nama\n2. Sorting waktu\n3. Sorting tipe\n4. Sorting urgensi\nmasukkan pilihan anda (1-4) : ");
+	printf("1. Sorting nama\n2. Sorting waktu\n3. Sorting tipe\n4. Sorting urgensi\nMasukkan pilihan anda (1-4) : ");
 	scanf("%d", &opsi_menu);
 	do
 	{
@@ -272,6 +274,8 @@ void swap(int urutan1, int urutan2, struct Event *event)
     event[urutan2].tahun = tampung_nilai;
 }
 
+
+//funciton untuk mencari event berdasarkan nama
 void searching_nama_event(struct Event *event, int *jumlah_database, FILE *data) {
 	int counter, status_pencarian, pencarian = 0;
 	char target_name[50];
@@ -287,7 +291,6 @@ void searching_nama_event(struct Event *event, int *jumlah_database, FILE *data)
 		status_pencarian = string_search(target_name, event[counter].nama);
 
 		if (status_pencarian == 0) {
-			// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 			pencarian++;
 		}
 
