@@ -11,7 +11,7 @@ int main()
 	FILE *data;
 	data = fopen("data proyek.txt", "w");
 	struct Event *event;
-	int opsi, jumlah_database=0, database;
+	int opsi, opsi_detail, jumlah_database=0, database, kembali_ke_menu;
 	char tanggal[10], bulan[2], tahun[4], jam[2], menit[2];
 	time_t t;
 	//dynamic memory allocation struct
@@ -24,16 +24,28 @@ int main()
 	{
 	t = time(NULL);
 	struct tm tm = *localtime(&t);
+	kembali_ke_menu=0;
 	//menu awal
 	sprintf(tanggal, "%2d-%2d-%4d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 	sprintf(jam, "%2d:%2d", tm.tm_hour, tm.tm_min);
 	//function di AsciiArt.h
     printAsciiArt(tanggal);
     printAsciiArt(jam);
-    printAsciiArt("MENU");
     
-    printf("|====|======================|\n| 1. |Buat Event            |\n| 2. |Lihat Event           |\n| 3. |Edit Event            |\n| 4. |Keluar                |\n|====|======================|\n(Pilih 1-4) : ");
-    
+    // Main Menu
+	printf("\n\n-----------------------------------\n");
+	printf("|    Event Planner and Tracker    |\n");
+	printf("|         by Kelompok 23          |\n");
+	printf("-----------------------------------\n");
+	printf("|            Main Menu            |\n");
+	printf("|                                 |\n");
+	printf("| 1. Buat Event                   |\n");
+	printf("| 2. Lihat Event                  |\n");
+	printf("| 3. Edit Event                   |\n");
+	printf("| 4. Keluar program               |\n");
+	printf("-----------------------------------\n");
+	printf("> ");
+	
 	scanf("%d", &opsi);
     switch(opsi)
 	    {
@@ -42,15 +54,105 @@ int main()
 	    		buat_event(&event[jumlah_database], &jumlah_database);//function di proyek.h
 	    		break;
 	    	case 2:
+	    		do
+	    		{
+	    			clear();
+		    		printf("0. Kembali\n");
+		    		for (database = 0; database < jumlah_database; database++)
+					{
+		    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
+		    		}
+		    		printf("%d. Sorting\n%d. Searching\n", jumlah_database+2, jumlah_database+3);
+	    			printf("Masukkan pilihan : ");
+	    			scanf("%d", &opsi_detail);
+	    			if (opsi_detail!=0&&opsi_detail<=jumlah_database)
+	    			{
+	    				clear();
+	    				detail_event(&event[opsi_detail-1]);
+	    				printf("\n1. kembali\n2. Beranda\nmasukkan pilihan : ");
+						scanf("%d", &opsi_detail);
+						switch (opsi_detail)
+						{
+							case 1 :
+								break;
+							case 2 :
+								kembali_ke_menu = 1;
+								break;
+						}
+	    			}else if (opsi_detail>jumlah_database)
+	    			{
+	    				clear();
+	    				if (opsi_detail == jumlah_database+2)
+	    				{
+	    					menu_sorting(jumlah_database, event);
+						}else if (opsi_detail == jumlah_database+3)
+						{
+							searching_nama_event(event, &jumlah_database, data);
+						}
+					}
+				}while(opsi_detail!=0 && kembali_ke_menu!=1);
+	    		break;
+	    	case 3:
+	    		do{
 	    		clear();
-	    		for (database = 0; database < jumlah_database; database++)
+		    	printf("0. Kembali\n");
+		    	for (database = 0; database < jumlah_database; database++)
 				{
 	    			lihat_event(&event[database], &jumlah_database, &database, data);//function di proyek.h
 	    		}
-	    		break;
-	    	case 3:
-	    		
-	    		break;
+	    		printf("Pilih event yang ingin diubah : ");
+			scanf("%d", &opsi);
+			clear();
+			if (opsi!=0)
+			    {
+			    	detail_event(&event[opsi-1]);
+			    	printf("\n0. Kembali\n1. Ubah nama event\n2. Ubah tanggal event\n3. Ubah deskripsi event\n4. Ubah tipe event\n5. Ubah urgensi event\n6. Hapus event\n> ");
+			    	scanf("%d", &opsi_detail);
+					switch (opsi_detail)
+					{
+						case 0 :
+							kembali_ke_menu = 1;
+							break;
+						case 1 :
+							printf("Masukkan nama event yang baru : ");
+							scanf("%s",event[opsi-1].nama);
+							break;
+						case 2 :
+							printf("Masukkan tanggal event yang baru : ");
+							scanf("%d", &event[opsi-1].tanggal);
+							printf("Masukkan bulan event yang baru : ");
+							scanf("%d", &event[opsi-1].bulan);
+							printf("Masukkan tahun event yang baru : ");
+							scanf("%d", &event[opsi-1].tahun);
+							break;
+						case 3 :
+							printf("Masukkan deskripsi event yang baru : ");
+							scanf("%s", event[opsi-1].deskripsi);
+							break;
+						case 4 :
+							printf("Masukkan tipe event yang baru : ");
+							scanf("%s", event[opsi-1].tipe);
+							break;
+						case 5 :
+							printf("Masukkan urgensi event yang baru : ");
+							scanf("%s", event[opsi-1].urgensi);
+							break;
+						case 6 :
+							jumlah_database = hapus_event(jumlah_database, &event[opsi], opsi);
+					}
+			    	printf("\n1. kembali\n2. Beranda\nmasukkan pilihan : ");
+					scanf("%d", &opsi);
+					switch (opsi)
+					{
+						case 1 :
+							break;
+						case 2 :
+							kembali_ke_menu = 1;
+							break;
+					}
+			    }
+			    }while(kembali_ke_menu != 1);
+			    break;
 	    	case 4:
 	    		for (database = 0; database < jumlah_database; database++)
 				{
