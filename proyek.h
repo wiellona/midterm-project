@@ -13,6 +13,10 @@ void sorting_waktu(int jumlah_database, struct Event *event);
 void sorting_tipe(int jumlah_database, struct Event *event);
 void sorting_urgensi(int jumlah_database, struct Event *event);
 void swap(int urutan1, int urutan2, struct Event *event);
+void searching_nama_event(struct Event *event, int *jumlah_database, FILE *data);
+void searching_waktu_event(struct Event *event, int *jumlah_database, FILE *data);
+void searching_tipe_event(struct Event *event, int *jumlah_database, FILE *data);
+void searching_urgensi_event(struct Event *event, int *jumlah_database, FILE *data);
 int string_search(char* finder, char* target);
 //function prototype end
 
