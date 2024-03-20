@@ -72,28 +72,43 @@ void simpan_event(struct Event *event, int *jumlah_database, int *database, FILE
 void menu_sorting(int jumlah_database, struct Event *event)
 {
 	int opsi_menu;
-	printf("1. Sorting nama\n2. Sorting waktu\n3. Sorting tipe\n4. Sorting urgensi\nMasukkan pilihan anda (1-4) : ");
+
+	printf("\n\n-----------------------------------\n");
+	printf("|    Menu Penyortiran    |\n");
+	printf("-----------------------------------\n");
+	printf("| Sortir data berdasarkan         |\n");
+	printf("| 1. Nama Event                   |\n");
+	printf("| 2. Waktu Event                  |\n");
+	printf("| 3. Tipe Event                   |\n");
+	printf("| 4. Tingkat urgensi              |\n");
+	printf("| 5. Kembali ke menu utama        |\n");
+	printf("-----------------------------------\n");
+	printf("Masukkan angka 1-5\n");
+	printf("> ");
 	scanf("%d", &opsi_menu);
 	do
 	{
-	switch (opsi_menu)
-	{
-		case 1 :
-			sorting_nama(jumlah_database, event);
-			break;
-		case 2 :
-			sorting_waktu(jumlah_database, event);
-			break;
-		case 3 :
-			sorting_tipe(jumlah_database, event);
-			break;
-		case 4 :
-			sorting_urgensi(jumlah_database, event);
-			break;
-		default:
-            printf("Input tidak valid. Silahkan masukkan bilangan 1-4\n");
-	}
-	}while(opsi_menu<1||opsi_menu>4);
+		switch (opsi_menu)
+		{
+			case 1 :
+				sorting_nama(jumlah_database, event);
+				break;
+			case 2 :
+				sorting_waktu(jumlah_database, event);
+				break;
+			case 3 :
+				sorting_tipe(jumlah_database, event);
+				break;
+			case 4 :
+				sorting_urgensi(jumlah_database, event);
+				break;
+			case 5 :
+				return;
+			default:
+				printf("Input tidak valid. Silahkan masukkan bilangan 1-5\n");
+				break;
+		}
+	} while(opsi_menu<1||5);
 }
 
 void sorting_nama(int jumlah_database, struct Event *event)
@@ -274,6 +289,51 @@ void swap(int urutan1, int urutan2, struct Event *event)
     event[urutan2].tahun = tampung_nilai;
 }
 
+//Searching Function Start
+//Menu searching
+void menu_searching(int jumlah_database, struct Event *event)
+{
+	FILE *data;
+	data = fopen("data proyek.txt", "w");
+	int database, opsi_menu;
+
+	printf("\n\n-----------------------------------\n");
+	printf("|    Menu Pencarian    |\n");
+	printf("-----------------------------------\n");
+	printf("| Cari data berdasarkan           |\n");
+	printf("| 1. Nama Event                   |\n");
+	printf("| 2. Waktu Event                  |\n");
+	printf("| 3. Tipe Event                   |\n");
+	printf("| 4. Tingkat urgensi              |\n");
+	printf("| 5. Kembali ke menu utama        |\n");
+	printf("-----------------------------------\n");
+	printf("Masukkan angka 1-5\n");
+	printf("> ");
+	scanf("%d", &opsi_menu);
+	do
+	{
+		switch (opsi_menu)
+		{
+			case 1 :
+				searching_nama_event(&event[database], &jumlah_database, data);
+				break;
+			case 2 :
+				searching_waktu_event(&event[database], &jumlah_database, data);
+				break;
+			case 3 :
+				searching_tipe_event(&event[database], &jumlah_database, data);
+				break;
+			case 4 :
+				searching_urgensi_event(&event[database], &jumlah_database, data);
+				break;
+			case 5 :
+				return;
+			default:
+				printf("Input tidak valid. Silahkan masukkan bilangan 1-5\n");
+				break;
+		}
+	} while(opsi_menu<1||opsi_menu>5);
+}
 
 //funciton untuk mencari event berdasarkan nama
 void searching_nama_event(struct Event *event, int *jumlah_database, FILE *data) {
@@ -300,6 +360,148 @@ void searching_nama_event(struct Event *event, int *jumlah_database, FILE *data)
 		}
 	}
 }
+
+//function searching berdasarkan tingkat urgensi
+void searching_urgensi_event(struct Event *event, int *jumlah_database, FILE *data) {
+	int counter, status_pencarian, pencarian = 0;
+	char target[50];
+
+	printf("Masukkan tingkat urgensi (Mendesak/Tidak mendesak): ");
+	scanf("%s", target);
+
+	// searching data di data proyek.txt
+	for (counter = 0; counter < *jumlah_database; counter++) {
+		fseek(data, counter * sizeof(struct Event), SEEK_SET);
+		fread(&event[counter], sizeof(struct Event), 1, data);
+
+		status_pencarian = string_search(target, event[counter].urgensi);
+
+		if (status_pencarian == 0) {
+			pencarian++;
+		}
+
+		if (pencarian == 0) {
+			printf("\nEvent tidak ditemukan.\n");
+			clear();
+		}
+	}
+}
+
+//function searching berdasarkan tipe event
+void searching_tipe_event(struct Event *event, int *jumlah_database, FILE *data) {
+	int counter, status_pencarian, pencarian = 0;
+	char target_tipe[50];
+
+	printf("Masukkan tipe event yang ingin dicari: (Pribadi/Kelompok)");
+	scanf("%s", target_tipe);
+
+	// searching data di data proyek.txt
+	for (counter = 0; counter < *jumlah_database; counter++) {
+		fseek(data, counter * sizeof(struct Event), SEEK_SET);
+		fread(&event[counter], sizeof(struct Event), 1, data);
+
+		status_pencarian = string_search(target_tipe, event[counter].tipe);
+
+		if (status_pencarian == 0) {
+			pencarian++;
+		}
+
+		if (pencarian == 0) {
+			printf("\nTidak ditemukan event dengan tipe tersebut.\n");
+			clear();
+		}
+	}
+}
+
+//Function searching berdasarkan waktu
+void searching_waktu_event(struct Event *event, int *jumlah_database, FILE *data) {
+	int counter, status_pencarian, pencarian = 0, pilihan;
+	char target_tipe[50];
+
+	do
+	{
+		printf("\nCari event berdasarkan: \n");
+		printf("1. Bulan\n");
+		printf("2. Tahun\n");
+		printf("3. Kembali ke menu utama");
+		printf("Masukkan pilihan Anda\n");
+		printf("> ");
+		scanf("%d", &pilihan);
+		clear();
+	} while (pilihan != 3);
+	
+	if (pilihan == 1) {
+		int bulan;
+		char namaBulan[20];
+		printf("Masukkan bulan: ");
+		if (fgets(namaBulan, sizeof(namaBulan), stdin) != NULL) {
+			if (sscanf(namaBulan, "%d", &bulan) == 1) {
+				//Jika input berupa int
+				if (bulan >= 1 && bulan <= 12) {
+					for (counter = 0; counter < *jumlah_database; counter++) {
+						fseek(data, counter * sizeof(struct Event), SEEK_SET);
+						fread(&event[counter], sizeof(struct Event), 1, data);
+
+						if (event[counter].bulan == bulan) {
+                            pencarian++;
+                            lihat_event(&event[counter], jumlah_database, &counter, data);
+                        }
+
+						if (pencarian == 0) {
+                        printf("\nTidak ada event dalam bulan ini.\n");
+                    	}
+					}
+				} else {
+					printf("Input tidak valid. Silahkan masukkan angka 1-12 atau nama bulan.\n");
+				} 
+			} else {
+				//Jika input berupa string
+				if(strcasecmp(namaBulan, "Januari") == 0) {
+						bulan = 1;
+					} else if(strcasecmp(namaBulan, "Februari") == 0) {
+						bulan = 2;
+					} else if(strcasecmp(namaBulan, "Maret") == 0) {
+						bulan = 3;
+					} else if(strcasecmp(namaBulan, "April") == 0) {
+						bulan = 4;
+					} else if(strcasecmp(namaBulan, "Mei") == 0) {
+						bulan = 5;
+					} else if(strcasecmp(namaBulan, "Juni") == 0) {
+						bulan = 6;
+					} else if(strcasecmp(namaBulan, "Juli") == 0) {
+						bulan = 7;
+					} else if(strcasecmp(namaBulan, "Agustus") == 0) {
+						bulan = 8;
+					} else if(strcasecmp(namaBulan, "September") == 0) {
+						bulan = 9;
+					} else if(strcasecmp(namaBulan, "Oktober") == 0) {
+						bulan = 10;
+					} else if(strcasecmp(namaBulan, "November") == 0) {
+						bulan = 11;
+					} else if(strcasecmp(namaBulan, "Desember") == 0) {
+						bulan = 12;
+					}
+				
+			}
+			if (bulan >= 1 && bulan <= 12) {
+					for (counter = 0; counter < *jumlah_database; counter++) {
+						fseek(data, counter * sizeof(struct Event), SEEK_SET);
+						fread(&event[counter], sizeof(struct Event), 1, data);
+
+						if (event[counter].bulan == bulan) {
+                            pencarian++;
+                            lihat_event(&event[counter], jumlah_database, &counter, data);
+                        }
+
+						if (pencarian == 0) {
+                        printf("\nTidak ada event dalam bulan ini.\n");
+                    	}
+					}
+			}
+		}
+	}
+}
+//Searching Function End
 
 // Function untuk un case sensitive
 int string_search(char* finder, char* target)
