@@ -1,6 +1,25 @@
+3
 
-Nama Event : UTS
-Tanggal : 27- 4-2023
-Deskripsi : '
-Tipe : Pribadi
-Urgensi : Mendesak
+Finpro
+20
+3
+2024
+-
+Kelompok
+Mendesak
+
+ProjectA
+28
+3
+2024
+Finalisasi
+Kelompok
+Tidak
+
+Bukber
+21
+8
+2024
+Kutek
+Pribadi
+Mendesak

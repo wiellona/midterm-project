@@ -7,7 +7,7 @@ struct Event{
 	int tanggal, bulan, tahun;
 };
 
-//function prototype start
+//function prototype
 void clear();
 void buat_event (struct Event *event, int *jumlah_database);
 void lihat_event(struct Event *event, int *database);
@@ -26,7 +26,6 @@ void searching_tipe(int jumlah_database, struct Event *event);
 void searching_urgensi(int jumlah_database, struct Event *event);
 int string_search(char* finder, char* target);
 int hapus_event(int jumlah_database, struct Event *event, int opsi);
-//function prototype end
 
 //function untuk system ("pause") dan system("cls")
 void clear()
@@ -40,19 +39,20 @@ void buat_event (struct Event *event, int *jumlah_database)
 {
 	printf("Nama Event : ");
 	scanf("%s", event->nama);
-	printf("Tanggal : ");
+	printf("Tanggal (1-31): ");
 	scanf("%d", &event->tanggal);
-	printf("Bulan : ");
+	printf("Bulan (1-12) : ");
 	scanf("%d", &event->bulan);
 	printf("Tahun : ");
 	scanf("%d", &event->tahun);
-	printf("deskripsi : ");
+	printf("Deskripsi : ");
 	scanf("%s", event->deskripsi);
-	printf("tipe : ");
+	printf("Tipe (Pribadi/Kelompok) : ");
 	scanf("%s", event->tipe);
-	printf("urgensi : ");
+	printf("Urgensi (Mendesak/Tidak mendesak) : ");
 	scanf("%s", event->urgensi);
 	(*jumlah_database)++;
+	printf("\nEvent berhasil ditambahkan.\n");
 }
 
 //function untuk melihat event
@@ -61,13 +61,14 @@ void lihat_event(struct Event *event, int *database)
 	printf("%d. %s\n", *database+1, event->nama);
 }
 
+//function untuk menampilkan detail event yang dipilih
 void detail_event(struct Event *event)
 {
-	printf("nama Event : %s\n", event->nama);
+	printf("Nama Event : %s\n", event->nama);
 	printf("Tanggal : %2d-%2d-%4d\n", event->tanggal, event->bulan, event->tahun);
-	printf("deskripsi : %s\n", event->deskripsi);
-	printf("tipe : %s\n", event->tipe);
-	printf("urgensi : %s\n", event->urgensi);
+	printf("Deskripsi : %s\n", event->deskripsi);
+	printf("Tipe : %s\n", event->tipe);
+	printf("Urgensi : %s\n", event->urgensi);
 }
 
 //function untuk menyimpan event
@@ -80,66 +81,90 @@ void simpan_event(struct Event *event, int jumlah_database, int database, FILE *
 	fclose(data);
 }
 
+//function untuk menampilkan menu searching
 void menu_searching(int jumlah_database, struct Event *event)
 {
 	int opsi_menu;
-	printf("1. Searching nama\n2. Searching waktu\n3. Searching tipe\n4. Searching urgensi\nmasukkan pilihan anda (1-4) : ");
+	printf("\n\n-----------------------------------\n");
+	printf("|          Menu Pencarian         |\n");
+	printf("-----------------------------------\n");
+	printf("| Cari data berdasarkan           |\n");
+	printf("| 1. Nama Event                   |\n");
+	printf("| 2. Waktu Event                  |\n");
+	printf("| 3. Tipe Event                   |\n");
+	printf("| 4. Tingkat urgensi              |\n");
+	printf("-----------------------------------\n");
+	printf("Masukkan pilihan Anda (1-4)\n");
+	printf("> ");
 	scanf("%d", &opsi_menu);
 	do
 	{
-	switch (opsi_menu)
-	{
-		case 1 :
-			searching_nama(jumlah_database, event);
-			break;
-		case 2 :
-			searching_waktu(jumlah_database, event);
-			break;
-		case 3 :
-			searching_tipe(jumlah_database, event);
-			break;
-		case 4 :
-			searching_urgensi(jumlah_database, event);
-			break;
-		default:
-            printf("Input tidak valid. Silahkan masukkan bilangan 1-4\n");
-	}
-	}while(opsi_menu<1||opsi_menu>4);
+		switch (opsi_menu)
+		{
+			case 1 :
+				searching_nama(jumlah_database, event);
+				break;
+			case 2 :
+				searching_waktu(jumlah_database, event);
+				break;
+			case 3 :
+				searching_tipe(jumlah_database, event);
+				break;
+			case 4 :
+				searching_urgensi(jumlah_database, event);
+				break;
+			default:
+				printf("Input tidak valid. Silahkan masukkan bilangan 1-4\n");
+		}
+	} while(opsi_menu<1||opsi_menu>4);
 }
 
+//function untuk menampilkan menu sorting
 void menu_sorting(int jumlah_database, struct Event *event)
 {
 	int opsi_menu;
-	printf("1. Sorting nama\n2. Sorting waktu\n3. Sorting tipe\n4. Sorting urgensi\nmasukkan pilihan anda (1-4) : ");
+	printf("\n\n-----------------------------------\n");
+	printf("|         Menu Penyortiran        |\n");
+	printf("-----------------------------------\n");
+	printf("| Sortir data berdasarkan         |\n");
+	printf("| 1. Nama Event                   |\n");
+	printf("| 2. Waktu Event                  |\n");
+	printf("| 3. Tipe Event                   |\n");
+	printf("| 4. Tingkat urgensi              |\n");
+	printf("-----------------------------------\n");
+	printf("Masukkan pilihan Anda (1-4)\n");
+	printf("> ");
 	scanf("%d", &opsi_menu);
 	do
 	{
-	switch (opsi_menu)
-	{
-		case 1 :
-			sorting_nama(jumlah_database, event);
-			break;
-		case 2 :
-			sorting_waktu(jumlah_database, event);
-			break;
-		case 3 :
-			sorting_tipe(jumlah_database, event);
-			break;
-		case 4 :
-			sorting_urgensi(jumlah_database, event);
-			break;
-		default:
-            printf("Input tidak valid. Silahkan masukkan bilangan 1-4\n");
-	}
-	}while(opsi_menu<1||opsi_menu>4);
+		switch (opsi_menu)
+		{
+			case 1 :
+				sorting_nama(jumlah_database, event);
+				break;
+			case 2 :
+				sorting_waktu(jumlah_database, event);
+				break;
+			case 3 :
+				sorting_tipe(jumlah_database, event);
+				break;
+			case 4 :
+				sorting_urgensi(jumlah_database, event);
+				break;
+			default:
+				printf("Input tidak valid. Silahkan masukkan bilangan 1-4\n");
+		}
+	} while(opsi_menu < 1 || opsi_menu > 4);
 }
 
+//function untuk melakukan sorting nama
 void sorting_nama(int jumlah_database, struct Event *event)
 {
   int urutan, sorting, pilihan_urutan, tampung_urutan;
   float tampung_nilai;
   //Menu untuk menentukan apakah nama akan diurutkan ascending atau descending
-        printf("\n1. Ascending (A - Z) \n2. Descending (Z - A)\nMasukkan pilihan Anda: ");
+		printf("\nBerikut adalah menu penyortiran untuk mengurutkan event berdasarkan nama.\n");
+        printf("\n1. Ascending (A - Z) \n2. Descending (Z - A)\nMasukkan pilihan Anda (1-2)\n> ");
         scanf("%d", &pilihan_urutan);
 
         int i, j;
@@ -168,11 +193,12 @@ void sorting_nama(int jumlah_database, struct Event *event)
           }
 }
 
+//function untuk melakukan sorting waktu
 void sorting_waktu(int jumlah_database, struct Event *event)
 {
   int urutan, sorting, pilihan_urutan, tampung_urutan;
   float tampung_nilai;
-  //Menu untuk menentukan apakah nama akan diurutkan ascending atau descending
+  //Menu untuk menentukan apakah waktu akan diurutkan ascending atau descending
         printf("\n1. Waktu terdekat \n2. Waktu terjauh\nMasukkan pilihan Anda: ");
         scanf("%d", &pilihan_urutan);
 
@@ -210,11 +236,12 @@ void sorting_waktu(int jumlah_database, struct Event *event)
           }
 }
 
+//function untuk melakukan sorting tipe
 void sorting_tipe(int jumlah_database, struct Event *event)
 {
   int urutan, sorting, pilihan_urutan, tampung_urutan;
   float tampung_nilai;
-  //Menu untuk menentukan apakah nama akan diurutkan ascending atau descending
+  //Menu untuk menentukan apakah tipe akan diurutkan ascending atau descending
         printf("\n1. Ascending (A - Z) \n2. Descending (Z - A)\nMasukkan pilihan Anda: ");
         scanf("%d", &pilihan_urutan);
 
@@ -244,11 +271,12 @@ void sorting_tipe(int jumlah_database, struct Event *event)
           }
 }
 
+//function untuk melakukan sorting urgensi
 void sorting_urgensi(int jumlah_database, struct Event *event)
 {
   int urutan, sorting, pilihan_urutan, tampung_urutan;
   float tampung_nilai;
-  //Menu untuk menentukan apakah nama akan diurutkan ascending atau descending
+  //Menu untuk menentukan apakah urgensi akan diurutkan ascending atau descending
         printf("\n1. Ascending (A - Z) \n2. Descending (Z - A)\nMasukkan pilihan Anda: ");
         scanf("%d", &pilihan_urutan);
 
@@ -278,6 +306,7 @@ void sorting_urgensi(int jumlah_database, struct Event *event)
           }
 }
 
+//function untuk melakukan swap event
 void swap(int urutan1, int urutan2, struct Event *event)
 {
 	int tampung_nilai;
@@ -312,6 +341,7 @@ void swap(int urutan1, int urutan2, struct Event *event)
     event[urutan2].tahun = tampung_nilai;
 }
 
+//function untuk melakukan searching nama
 void searching_nama(int jumlah_database, struct Event *event) {
 	int counter, status_pencarian, pencarian = 0;
 	char target_name[50];
@@ -320,12 +350,11 @@ void searching_nama(int jumlah_database, struct Event *event) {
 	scanf("%s", target_name);
 	printf("Hasil pencarian\n");
 
-	// searching data di data proyek.txt
+	// searching data di struct event
 	for (counter = 0; counter < jumlah_database; counter++) {
 		status_pencarian = string_search(target_name, event[counter].nama);
 
 		if (status_pencarian == 0) {
-			// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 			lihat_event(&event[counter], &pencarian) ;
 			pencarian++;
 		}
@@ -335,6 +364,7 @@ void searching_nama(int jumlah_database, struct Event *event) {
 	}
 }
 
+//function untuk melakukan searching waktu
 void searching_waktu(int jumlah_database, struct Event *event) {
 	int counter, status_pencarian, pencarian = 0, opsi, target_month, target_year, error=0;
 	do
@@ -342,6 +372,7 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 		error = 0;
 		printf("Masukkan opsi pencarian\n1. Search bulan event\n2. Search tahun event\n3. Search bulan dan tahun event\n> ");
 		scanf("%d", &opsi);
+		//searching data di struct event
 		switch (opsi)
 		{
 			case 1 :
@@ -351,7 +382,6 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 				
 				for (counter = 0; counter < jumlah_database; counter++) {
 					if (target_month == event[counter].bulan) {
-						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
 					}
@@ -367,7 +397,6 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 
 				for (counter = 0; counter < jumlah_database; counter++) {
 					if (target_year == event[counter].tahun) {
-						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
 					}
@@ -385,7 +414,6 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 
 				for (counter = 0; counter < jumlah_database; counter++) {
 					if (target_month == event[counter].bulan && target_year == event[counter].tahun) {
-						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
 					}
@@ -400,20 +428,20 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 	}while(error==1);
 }
 
+//function untuk melakukan searching tipe
 void searching_tipe(int jumlah_database, struct Event *event) {
 	int counter, status_pencarian, pencarian = 0;
 	char target_name[50];
 
-	printf("Masukkan tipe event yang ingin dicari: ");
+	printf("\nBerikut adalah menu untuk mencari event berdasarkan tipenya. Silahkan masukkan tipe event yang ingin Anda cari (pribadi/kelompok)\nMasukkan tipe event yang ingin dicari: ");
 	scanf("%s", target_name);
 	printf("Hasil pencarian\n");
 
-	// searching data di data proyek.txt
+	// searching data di struct event
 	for (counter = 0; counter < jumlah_database; counter++) {
 		status_pencarian = string_search(target_name, event[counter].tipe);
 
 		if (status_pencarian == 0) {
-			// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 			lihat_event(&event[counter], &pencarian) ;
 			pencarian++;
 		}
@@ -423,20 +451,20 @@ void searching_tipe(int jumlah_database, struct Event *event) {
 	}
 }
 
+//function untuk melakukan searching urgensi
 void searching_urgensi(int jumlah_database, struct Event *event) {
 	int counter, status_pencarian, pencarian = 0;
 	char target_name[50];
 
-	printf("Masukkan urgensi event yang ingin dicari: ");
+	printf("\n\nBerikut adalah menu untuk mencari event berdasarkan tingkat urgensinya. Silahkan masukkan event yang ingin Anda cari berdasarkan tingkat urgensinya (Mendesak/Tidak)\nMasukkan urgensi event yang ingin dicari: ");
 	scanf("%s", target_name);
 	printf("Hasil pencarian\n");
 
-	// searching data di data proyek.txt
+	// searching data di struct event
 	for (counter = 0; counter < jumlah_database; counter++) {
 		status_pencarian = string_search(target_name, event[counter].urgensi);
 
 		if (status_pencarian == 0) {
-			// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 			lihat_event(&event[counter], &pencarian) ;
 			pencarian++;
 		}
@@ -463,6 +491,7 @@ int string_search(char* finder, char* target)
 	return 0;
 }
 
+//function untuk menghapus event yang dipilih
 int hapus_event(int jumlah_database, struct Event *event, int opsi)
 {
 	int urutan;
