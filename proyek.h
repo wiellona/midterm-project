@@ -332,7 +332,6 @@ void searching_nama(int jumlah_database, struct Event *event) {
 	}
 	if (pencarian == 0) {
 			printf("\nEvent tidak ditemukan.\n");
-			clear();
 	}
 }
 
@@ -355,10 +354,10 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
-					}else {
-						printf("\nEvent tidak ditemukan.\n");
-						clear();
 					}
+				}
+				if (pencarian == 0) {
+					printf("\nEvent tidak ditemukan.\n");
 				}
 				break;
 			case 2 :
@@ -371,10 +370,10 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
-					}else {
-						printf("\nEvent tidak ditemukan.\n");
-						clear();
 					}
+				}
+				if (pencarian == 0) {
+					printf("\nEvent tidak ditemukan.\n");
 				}
 				break;
 			case 3 :
@@ -389,10 +388,10 @@ void searching_waktu(int jumlah_database, struct Event *event) {
 						// lihat_event(&event[pencarian], jumlah_database, &pencarian, data);
 						lihat_event(&event[counter], &pencarian) ;
 						pencarian++;
-					}else {
-						printf("\nEvent tidak ditemukan.\n");
-						clear();
 					}
+				}
+				if (pencarian == 0) {
+					printf("\nEvent tidak ditemukan.\n");
 				}
 				break;
 			default :
@@ -421,7 +420,6 @@ void searching_tipe(int jumlah_database, struct Event *event) {
 	}
 	if (pencarian == 0) {
 			printf("\nEvent tidak ditemukan.\n");
-			clear();
 	}
 }
 
@@ -445,7 +443,6 @@ void searching_urgensi(int jumlah_database, struct Event *event) {
 	}
 	if (pencarian == 0) {
 			printf("\nEvent tidak ditemukan.\n");
-			clear();
 	}
 }
 
