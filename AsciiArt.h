@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 //function untuk print string dengan ascii art (Belom jadi)
 void printAsciiArt(const char *text) {
