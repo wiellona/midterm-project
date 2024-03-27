@@ -1,25 +1,25 @@
 3
 
-Finpro
+Final Project
 20
 3
 2024
--
+Pakai %[^\n] untuk meminta input dengan banyak karakter hingga user memencet enter
 Kelompok
 Mendesak
 
-ProjectA
+UTS Proglan
 28
 3
 2024
-Finalisasi
-Kelompok
-Tidak
-
-Bukber
-21
-8
-2024
-Kutek
+Di K301
 Pribadi
 Mendesak
+
+UTS Alin
+27
+3
+2024
+Jangan bawa cheatsheet
+Pribadi
+Tidak mendesak

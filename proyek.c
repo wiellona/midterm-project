@@ -123,7 +123,7 @@ int main()
 											break;
 										case 1 :
 											printf("Masukkan nama event yang baru : ");
-											scanf("%s",event[opsi-1].nama);
+											scanf(" %[^\n]s",event[opsi-1].nama);
 											break;
 										case 2 :
 											printf("Masukkan tanggal event yang baru : ");
@@ -135,15 +135,15 @@ int main()
 											break;
 										case 3 :
 											printf("Masukkan deskripsi event yang baru : ");
-											scanf("%s", event[opsi-1].deskripsi);
+											scanf(" %[^\n]s", event[opsi-1].deskripsi);
 											break;
 										case 4 :
-											printf("Masukkan tipe event yang baru : ");
-											scanf("%s", event[opsi-1].tipe);
+											printf("Masukkan tipe event yang baru (Pribadi/Kelompok): ");
+											scanf(" %[^\n]s", event[opsi-1].tipe);
 											break;
 										case 5 :
-											printf("Masukkan urgensi event yang baru : ");
-											scanf("%s", event[opsi-1].urgensi);
+											printf("Masukkan urgensi event yang baru (Mendesak/Tidak Mendesak): ");
+											scanf(" %[^\n]s", event[opsi-1].urgensi);
 											break;
 										case 6 :
 											jumlah_database = hapus_event(jumlah_database, &event[opsi], opsi);//function untuk menghapus salah satu event dari database

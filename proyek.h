@@ -38,7 +38,7 @@ void clear()
 void buat_event (struct Event *event, int *jumlah_database)
 {
 	printf("Nama Event : ");
-	scanf("%s", event->nama);
+	scanf(" %[^\n]s", event->nama);
 	printf("Tanggal (1-31): ");
 	scanf("%d", &event->tanggal);
 	printf("Bulan (1-12) : ");
@@ -46,11 +46,11 @@ void buat_event (struct Event *event, int *jumlah_database)
 	printf("Tahun : ");
 	scanf("%d", &event->tahun);
 	printf("Deskripsi : ");
-	scanf("%s", event->deskripsi);
+	scanf(" %[^\n]s", event->deskripsi);
 	printf("Tipe (Pribadi/Kelompok) : ");
-	scanf("%s", event->tipe);
+	scanf(" %[^\n]s", event->tipe);
 	printf("Urgensi (Mendesak/Tidak mendesak) : ");
-	scanf("%s", event->urgensi);
+	scanf(" %[^\n]s", event->urgensi);
 	(*jumlah_database)++;
 	printf("\nEvent berhasil ditambahkan.\n");
 }
@@ -347,7 +347,7 @@ void searching_nama(int jumlah_database, struct Event *event) {
 	char target_name[50];
 
 	printf("Masukkan nama event yang ingin dicari: ");
-	scanf("%s", target_name);
+	scanf(" %[^\n]s", target_name);
 	printf("Hasil pencarian\n");
 
 	// searching data di struct event
@@ -502,4 +502,5 @@ int hapus_event(int jumlah_database, struct Event *event, int opsi)
 	jumlah_database--;
 	printf("\n%d\n", jumlah_database);
 	return jumlah_database;
+	printf("\nEvent berhasil dihapus\n");
 }
